@@ -3,6 +3,291 @@
   "compatibilityLevel": 1500,
   "model": {
     "culture": "en-US",
+    "dataSources": [
+      {
+        "type": "structured",
+        "name": "SQL/bitsql wctc edu;MedicareReportingDW",
+        "connectionDetails": {
+          "protocol": "tds",
+          "address": {
+            "server": "bitsql.wctc.edu",
+            "database": "MedicareReportingDW"
+          },
+          "authentication": null,
+          "query": null
+        },
+        "options": {},
+        "credential": {
+          "AuthenticationKind": "UsernamePassword",
+          "Username": "MedicareReportingUser",
+          "EncryptConnection": false
+        }
+      }
+    ],
+    "tables": [
+      {
+        "name": "FacilityMeasures_WI_DW DimDate",
+        "columns": [
+          {
+            "name": "DateKey",
+            "dataType": "int64",
+            "sourceColumn": "DateKey"
+          },
+          {
+            "name": "Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Date"
+          },
+          {
+            "name": "DayOfMonth",
+            "dataType": "int64",
+            "sourceColumn": "DayOfMonth"
+          },
+          {
+            "name": "MonthNumber",
+            "dataType": "int64",
+            "sourceColumn": "MonthNumber"
+          },
+          {
+            "name": "MonthName",
+            "dataType": "string",
+            "sourceColumn": "MonthName"
+          },
+          {
+            "name": "Year",
+            "dataType": "int64",
+            "sourceColumn": "Year"
+          },
+          {
+            "name": "DayOfWeekName",
+            "dataType": "string",
+            "sourceColumn": "DayOfWeekName"
+          },
+          {
+            "name": "DayOfWeekNumber",
+            "dataType": "int64",
+            "sourceColumn": "DayOfWeekNumber"
+          },
+          {
+            "name": "IsWeekend",
+            "dataType": "boolean",
+            "sourceColumn": "IsWeekend"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/bitsql wctc edu;MedicareReportingDW\",",
+                "    FacilityMeasures_WI_DW_DimDate = Source{[Schema=\"FacilityMeasures_WI_DW\",Item=\"DimDate\"]}[Data]",
+                "in",
+                "    FacilityMeasures_WI_DW_DimDate"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "FacilityMeasures_WI_DW DimFacility",
+        "columns": [
+          {
+            "name": "FacilityKey",
+            "dataType": "int64",
+            "sourceColumn": "FacilityKey"
+          },
+          {
+            "name": "FacilityID",
+            "dataType": "int64",
+            "sourceColumn": "FacilityID"
+          },
+          {
+            "name": "FacilityName",
+            "dataType": "string",
+            "sourceColumn": "FacilityName"
+          },
+          {
+            "name": "FacilityAddress",
+            "dataType": "string",
+            "sourceColumn": "FacilityAddress"
+          },
+          {
+            "name": "FacilityCity",
+            "dataType": "string",
+            "sourceColumn": "FacilityCity"
+          },
+          {
+            "name": "FacilityState",
+            "dataType": "string",
+            "sourceColumn": "FacilityState"
+          },
+          {
+            "name": "FacilityZipCode",
+            "dataType": "string",
+            "sourceColumn": "FacilityZipCode"
+          },
+          {
+            "name": "FacilityCountyName",
+            "dataType": "string",
+            "sourceColumn": "FacilityCountyName"
+          },
+          {
+            "name": "FacilityPhoneNumber",
+            "dataType": "string",
+            "sourceColumn": "FacilityPhoneNumber"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/bitsql wctc edu;MedicareReportingDW\",",
+                "    FacilityMeasures_WI_DW_DimFacility = Source{[Schema=\"FacilityMeasures_WI_DW\",Item=\"DimFacility\"]}[Data]",
+                "in",
+                "    FacilityMeasures_WI_DW_DimFacility"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "FacilityMeasures_WI_DW FactMeasure",
+        "columns": [
+          {
+            "name": "MeasureKey",
+            "dataType": "int64",
+            "sourceColumn": "MeasureKey"
+          },
+          {
+            "name": "MeasureID",
+            "dataType": "int64",
+            "sourceColumn": "MeasureID"
+          },
+          {
+            "name": "FacilityKey",
+            "dataType": "int64",
+            "sourceColumn": "FacilityKey"
+          },
+          {
+            "name": "FacilityID",
+            "dataType": "int64",
+            "sourceColumn": "FacilityID"
+          },
+          {
+            "name": "FacilityMeasureID",
+            "dataType": "int64",
+            "sourceColumn": "FacilityMeasureID"
+          },
+          {
+            "name": "MeasureName",
+            "dataType": "string",
+            "sourceColumn": "MeasureName"
+          },
+          {
+            "name": "ScoreComparedToNational",
+            "dataType": "string",
+            "sourceColumn": "ScoreComparedToNational"
+          },
+          {
+            "name": "Score",
+            "dataType": "double",
+            "sourceColumn": "Score"
+          },
+          {
+            "name": "NationalScoreHigh",
+            "dataType": "double",
+            "sourceColumn": "NationalScoreHigh"
+          },
+          {
+            "name": "NationalScoreLow",
+            "dataType": "double",
+            "sourceColumn": "NationalScoreLow"
+          },
+          {
+            "name": "NationalScoreAverage",
+            "dataType": "double",
+            "sourceColumn": "NationalScoreAverage"
+          },
+          {
+            "name": "MeasureSortOrderName",
+            "dataType": "string",
+            "sourceColumn": "MeasureSortOrderName"
+          },
+          {
+            "name": "MeasureTypeName",
+            "dataType": "string",
+            "sourceColumn": "MeasureTypeName"
+          },
+          {
+            "name": "StartDate",
+            "dataType": "dateTime",
+            "sourceColumn": "StartDate"
+          },
+          {
+            "name": "EndDate",
+            "dataType": "dateTime",
+            "sourceColumn": "EndDate"
+          },
+          {
+            "name": "StartDateKey",
+            "dataType": "int64",
+            "sourceColumn": "StartDateKey"
+          },
+          {
+            "name": "EndDateKey",
+            "dataType": "int64",
+            "sourceColumn": "EndDateKey"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/bitsql wctc edu;MedicareReportingDW\",",
+                "    FacilityMeasures_WI_DW_FactMeasure = Source{[Schema=\"FacilityMeasures_WI_DW\",Item=\"FactMeasure\"]}[Data]",
+                "in",
+                "    FacilityMeasures_WI_DW_FactMeasure"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "9f2a833c-0410-43c7-a795-93946dc65894",
+        "fromTable": "FacilityMeasures_WI_DW FactMeasure",
+        "fromColumn": "EndDateKey",
+        "toTable": "FacilityMeasures_WI_DW DimDate",
+        "toColumn": "DateKey",
+        "isActive": false
+      },
+      {
+        "name": "96fd7a28-33fb-4258-99ac-08a59017ee7a",
+        "fromTable": "FacilityMeasures_WI_DW FactMeasure",
+        "fromColumn": "StartDateKey",
+        "toTable": "FacilityMeasures_WI_DW DimDate",
+        "toColumn": "DateKey"
+      },
+      {
+        "name": "47c5b8db-edb9-42fc-8424-862d5df98bd6",
+        "fromTable": "FacilityMeasures_WI_DW FactMeasure",
+        "fromColumn": "FacilityKey",
+        "toTable": "FacilityMeasures_WI_DW DimFacility",
+        "toColumn": "FacilityKey"
+      }
+    ],
     "annotations": [
       {
         "name": "ClientCompatibilityLevel",
