@@ -18,6 +18,8 @@
         },
         "credential": {
           "AuthenticationKind": "UsernamePassword",
+          "kind": "SQL",
+          "path": "bitsql.wctc.edu;MedicareReportingDW",
           "Username": "MedicareReportingUser",
           "EncryptConnection": false
         }
@@ -25,10 +27,10 @@
     ],
     "tables": [
       {
-        "name": "FacilityMeasures_WI_DW DimDate",
+        "name": "Date",
         "columns": [
           {
-            "name": "DateKey",
+            "name": "Date Key",
             "dataType": "int64",
             "isHidden": true,
             "sourceColumn": "DateKey"
@@ -39,17 +41,17 @@
             "sourceColumn": "Date"
           },
           {
-            "name": "DayOfMonth",
+            "name": "Day Of Month",
             "dataType": "int64",
             "sourceColumn": "DayOfMonth"
           },
           {
-            "name": "MonthNumber",
+            "name": "Month Number",
             "dataType": "int64",
             "sourceColumn": "MonthNumber"
           },
           {
-            "name": "MonthName",
+            "name": "Month Name",
             "dataType": "string",
             "sourceColumn": "MonthName"
           },
@@ -59,17 +61,17 @@
             "sourceColumn": "Year"
           },
           {
-            "name": "DayOfWeekName",
+            "name": "Day Of Week Name",
             "dataType": "string",
             "sourceColumn": "DayOfWeekName"
           },
           {
-            "name": "DayOfWeekNumber",
+            "name": "Day Of Week Number",
             "dataType": "int64",
             "sourceColumn": "DayOfWeekNumber"
           },
           {
-            "name": "IsWeekend",
+            "name": "Is Weekend",
             "dataType": "boolean",
             "sourceColumn": "IsWeekend"
           }
@@ -89,53 +91,81 @@
               ]
             }
           }
+        ],
+        "hierarchies": [
+          {
+            "name": "Calendar",
+            "levels": [
+              {
+                "name": "Year",
+                "ordinal": 0,
+                "column": "Year"
+              },
+              {
+                "name": "Month Name",
+                "ordinal": 1,
+                "column": "Month Name"
+              },
+              {
+                "name": "Day Of Week Name",
+                "ordinal": 2,
+                "column": "Day Of Week Name"
+              },
+              {
+                "name": "Day Of Month",
+                "ordinal": 3,
+                "column": "Day Of Month"
+              }
+            ]
+          }
         ]
       },
       {
-        "name": "FacilityMeasures_WI_DW DimFacility",
+        "name": "Facility",
         "columns": [
           {
-            "name": "FacilityKey",
+            "name": "Facility Key",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "FacilityKey"
           },
           {
-            "name": "FacilityID",
+            "name": "Facility ID",
             "dataType": "int64",
             "sourceColumn": "FacilityID"
           },
           {
-            "name": "FacilityName",
+            "name": "Facility Name",
             "dataType": "string",
             "sourceColumn": "FacilityName"
           },
           {
-            "name": "FacilityAddress",
+            "name": "Facility Address",
             "dataType": "string",
             "sourceColumn": "FacilityAddress"
           },
           {
-            "name": "FacilityCity",
+            "name": "Facility City",
             "dataType": "string",
             "sourceColumn": "FacilityCity"
           },
           {
-            "name": "FacilityState",
+            "name": "Facility State",
             "dataType": "string",
             "sourceColumn": "FacilityState"
           },
           {
-            "name": "FacilityZipCode",
+            "name": "Facility Zip Code",
             "dataType": "string",
             "sourceColumn": "FacilityZipCode"
           },
           {
-            "name": "FacilityCountyName",
+            "name": "Facility County Name",
             "dataType": "string",
             "sourceColumn": "FacilityCountyName"
           },
           {
-            "name": "FacilityPhoneNumber",
+            "name": "Facility Phone Number",
             "dataType": "string",
             "sourceColumn": "FacilityPhoneNumber"
           }
@@ -158,40 +188,42 @@
         ]
       },
       {
-        "name": "FacilityMeasures_WI_DW FactMeasure",
+        "name": "Facility Measures",
         "columns": [
           {
-            "name": "MeasureKey",
+            "name": "Measure Key",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "MeasureKey"
           },
           {
-            "name": "MeasureID",
+            "name": "Measure ID",
             "dataType": "int64",
             "sourceColumn": "MeasureID"
           },
           {
-            "name": "FacilityKey",
+            "name": "Facility Key",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "FacilityKey"
           },
           {
-            "name": "FacilityID",
+            "name": "Facility ID",
             "dataType": "int64",
             "sourceColumn": "FacilityID"
           },
           {
-            "name": "FacilityMeasureID",
+            "name": "Facility Measure ID",
             "dataType": "int64",
             "sourceColumn": "FacilityMeasureID"
           },
           {
-            "name": "MeasureName",
+            "name": "Measure Name",
             "dataType": "string",
             "sourceColumn": "MeasureName"
           },
           {
-            "name": "ScoreComparedToNational",
+            "name": "Score Compared To National",
             "dataType": "string",
             "sourceColumn": "ScoreComparedToNational"
           },
@@ -201,48 +233,50 @@
             "sourceColumn": "Score"
           },
           {
-            "name": "NationalScoreHigh",
+            "name": "National Score High",
             "dataType": "double",
             "sourceColumn": "NationalScoreHigh"
           },
           {
-            "name": "NationalScoreLow",
+            "name": "National Score Low",
             "dataType": "double",
             "sourceColumn": "NationalScoreLow"
           },
           {
-            "name": "NationalScoreAverage",
+            "name": "National Score Average",
             "dataType": "double",
             "sourceColumn": "NationalScoreAverage"
           },
           {
-            "name": "MeasureSortOrderName",
+            "name": "Measure Sort Order Name",
             "dataType": "string",
             "sourceColumn": "MeasureSortOrderName"
           },
           {
-            "name": "MeasureTypeName",
+            "name": "Measure Type Name",
             "dataType": "string",
             "sourceColumn": "MeasureTypeName"
           },
           {
-            "name": "StartDate",
+            "name": "Start Date",
             "dataType": "dateTime",
             "sourceColumn": "StartDate"
           },
           {
-            "name": "EndDate",
+            "name": "End Date",
             "dataType": "dateTime",
             "sourceColumn": "EndDate"
           },
           {
-            "name": "StartDateKey",
+            "name": "Start Date Key",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "StartDateKey"
           },
           {
-            "name": "EndDateKey",
+            "name": "End Date Key",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "EndDateKey"
           }
         ],
@@ -267,25 +301,25 @@
     "relationships": [
       {
         "name": "9f2a833c-0410-43c7-a795-93946dc65894",
-        "fromTable": "FacilityMeasures_WI_DW FactMeasure",
-        "fromColumn": "EndDateKey",
-        "toTable": "FacilityMeasures_WI_DW DimDate",
-        "toColumn": "DateKey",
+        "fromTable": "Facility Measures",
+        "fromColumn": "End Date Key",
+        "toTable": "Date",
+        "toColumn": "Date Key",
         "isActive": false
       },
       {
         "name": "96fd7a28-33fb-4258-99ac-08a59017ee7a",
-        "fromTable": "FacilityMeasures_WI_DW FactMeasure",
-        "fromColumn": "StartDateKey",
-        "toTable": "FacilityMeasures_WI_DW DimDate",
-        "toColumn": "DateKey"
+        "fromTable": "Facility Measures",
+        "fromColumn": "Start Date Key",
+        "toTable": "Date",
+        "toColumn": "Date Key"
       },
       {
         "name": "47c5b8db-edb9-42fc-8424-862d5df98bd6",
-        "fromTable": "FacilityMeasures_WI_DW FactMeasure",
-        "fromColumn": "FacilityKey",
-        "toTable": "FacilityMeasures_WI_DW DimFacility",
-        "toColumn": "FacilityKey"
+        "fromTable": "Facility Measures",
+        "fromColumn": "Facility Key",
+        "toTable": "Facility",
+        "toColumn": "Facility Key"
       }
     ],
     "annotations": [
