@@ -325,13 +325,6 @@
             "dataType": "int64",
             "isDataTypeInferred": true,
             "expression": "DATEDIFF([Start Date],[End Date],DAY)"
-          },
-          {
-            "type": "calculated",
-            "name": "Rank",
-            "dataType": "int64",
-            "isDataTypeInferred": true,
-            "expression": "RANKX('Facility Measures',[Score])"
           }
         ],
         "partitions": [
