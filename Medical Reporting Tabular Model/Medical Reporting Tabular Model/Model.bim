@@ -16,6 +16,7 @@
           "authentication": null,
           "query": null
         },
+        "options": {},
         "credential": {
           "AuthenticationKind": "UsernamePassword",
           "kind": "SQL",
@@ -28,6 +29,7 @@
     "tables": [
       {
         "name": "Date",
+        "dataCategory": "Time",
         "columns": [
           {
             "name": "Date Key",
@@ -38,6 +40,7 @@
           {
             "name": "Date",
             "dataType": "dateTime",
+            "isKey": true,
             "sourceColumn": "Date"
           },
           {
@@ -71,9 +74,39 @@
             "sourceColumn": "DayOfWeekNumber"
           },
           {
-            "name": "Is Weekend",
+            "name": "IsWeekend",
             "dataType": "boolean",
-            "sourceColumn": "IsWeekend"
+            "isHidden": true,
+            "sourceColumn": "IsWeekend",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\""
+          },
+          {
+            "type": "calculated",
+            "name": "Month Description",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": " [Month Number]&\" - \"&[Month Name]"
+          },
+          {
+            "type": "calculated",
+            "name": "Day Of Week Description",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": "[Day Of Week Number]&\" - \"&[Day Of Week Name]"
+          },
+          {
+            "type": "calculated",
+            "name": "Day Long Description",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": " [Day Of Week Name]&\", \"&[Month Name]&\" \"&[Day Of Month]&\", \"&[Year]"
+          },
+          {
+            "type": "calculated",
+            "name": "Is Weekend",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": " IF([IsWeekend],\"Weekend\",\"Weekday\")"
           }
         ],
         "partitions": [
@@ -85,9 +118,12 @@
               "expression": [
                 "let",
                 "    Source = #\"SQL/bitsql wctc edu;MedicareReportingDW\",",
-                "    FacilityMeasures_WI_DW_DimDate = Source{[Schema=\"FacilityMeasures_WI_DW\",Item=\"DimDate\"]}[Data]",
+                "    FacilityMeasures_WI_DW_DimDate = Source{[Schema=\"FacilityMeasures_WI_DW\",Item=\"DimDate\"]}[Data],",
+                "    #\"Sorted Rows\" = Table.Sort(FacilityMeasures_WI_DW_DimDate,{{\"Date\", Order.Descending}}),",
+                "    #\"Filtered Rows\" = Table.SelectRows(#\"Sorted Rows\", each [Date] <Date.From(DateTime.LocalNow()) and [Date] <> #date(1900, 1, 1)),",
+                "    #\"Sorted Rows1\" = Table.Sort(#\"Filtered Rows\",{{\"Date\", Order.Ascending}})",
                 "in",
-                "    FacilityMeasures_WI_DW_DimDate"
+                "    #\"Sorted Rows1\""
               ]
             }
           }
@@ -132,6 +168,7 @@
           {
             "name": "Facility ID",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "FacilityID"
           },
           {
@@ -199,6 +236,7 @@
           {
             "name": "Measure ID",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "MeasureID"
           },
           {
@@ -210,11 +248,13 @@
           {
             "name": "Facility ID",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "FacilityID"
           },
           {
             "name": "Facility Measure ID",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "FacilityMeasureID"
           },
           {
@@ -278,6 +318,13 @@
             "dataType": "int64",
             "isHidden": true,
             "sourceColumn": "EndDateKey"
+          },
+          {
+            "type": "calculated",
+            "name": "Days Recorded",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "DATEDIFF([Start Date],[End Date],DAY)"
           }
         ],
         "partitions": [
@@ -293,6 +340,17 @@
                 "in",
                 "    FacilityMeasures_WI_DW_FactMeasure"
               ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "CalculatedTable 1",
+        "partitions": [
+          {
+            "name": "CalculatedTable 1",
+            "source": {
+              "type": "calculated"
             }
           }
         ]
