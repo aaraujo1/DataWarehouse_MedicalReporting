@@ -325,6 +325,13 @@
             "dataType": "int64",
             "isDataTypeInferred": true,
             "expression": "DATEDIFF([Start Date],[End Date],DAY)"
+          },
+          {
+            "type": "calculated",
+            "name": "Rank",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "RANKX('Facility Measures',[Score])"
           }
         ],
         "partitions": [
@@ -345,13 +352,39 @@
         ]
       },
       {
-        "name": "CalculatedTable 1",
+        "name": "Facility Measures Measures",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "col1",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "sourceColumn": "[col1]"
+          }
+        ],
         "partitions": [
           {
             "name": "CalculatedTable 1",
             "source": {
-              "type": "calculated"
+              "type": "calculated",
+              "expression": "DATATABLE(\"col1\",string,{{\"\"}})"
             }
+          }
+        ],
+        "measures": [
+          {
+            "name": "High Score",
+            "expression": "MAX('Facility Measures'[Score])"
+          },
+          {
+            "name": "Low Score",
+            "expression": "MIN('Facility Measures'[Score])"
+          },
+          {
+            "name": "Average Score",
+            "expression": "AVERAGE('Facility Measures'[Score])"
           }
         ]
       }
