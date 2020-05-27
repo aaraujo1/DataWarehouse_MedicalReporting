@@ -157,7 +157,7 @@
         ]
       },
       {
-        "name": "Facility",
+        "name": "Facilities",
         "columns": [
           {
             "name": "Facility Key",
@@ -225,7 +225,7 @@
         ]
       },
       {
-        "name": "Facility Measures",
+        "name": "Facility Scores",
         "columns": [
           {
             "name": "Measure Key",
@@ -325,6 +325,11 @@
             "dataType": "int64",
             "isDataTypeInferred": true,
             "expression": "DATEDIFF([Start Date],[End Date],DAY)"
+          },
+          {
+            "name": "Measure Sort Order Number",
+            "dataType": "int64",
+            "sourceColumn": "MeasureSortOrderNumber"
           }
         ],
         "partitions": [
@@ -345,7 +350,7 @@
         ]
       },
       {
-        "name": "Facility Measures Measures",
+        "name": "Facility Scores Measures",
         "columns": [
           {
             "type": "calculatedTableColumn",
@@ -369,15 +374,15 @@
         "measures": [
           {
             "name": "High Score",
-            "expression": "MAX('Facility Measures'[Score])"
+            "expression": "MAX('Facility Scores'[Score])"
           },
           {
             "name": "Low Score",
-            "expression": "MIN('Facility Measures'[Score])"
+            "expression": "MIN('Facility Scores'[Score])"
           },
           {
             "name": "Average Score",
-            "expression": "AVERAGE('Facility Measures'[Score])"
+            "expression": "AVERAGE('Facility Scores'[Score])"
           }
         ]
       }
@@ -385,7 +390,7 @@
     "relationships": [
       {
         "name": "9f2a833c-0410-43c7-a795-93946dc65894",
-        "fromTable": "Facility Measures",
+        "fromTable": "Facility Scores",
         "fromColumn": "End Date Key",
         "toTable": "Date",
         "toColumn": "Date Key",
@@ -393,16 +398,16 @@
       },
       {
         "name": "96fd7a28-33fb-4258-99ac-08a59017ee7a",
-        "fromTable": "Facility Measures",
+        "fromTable": "Facility Scores",
         "fromColumn": "Start Date Key",
         "toTable": "Date",
         "toColumn": "Date Key"
       },
       {
         "name": "47c5b8db-edb9-42fc-8424-862d5df98bd6",
-        "fromTable": "Facility Measures",
+        "fromTable": "Facility Scores",
         "fromColumn": "Facility Key",
-        "toTable": "Facility",
+        "toTable": "Facilities",
         "toColumn": "Facility Key"
       }
     ],
