@@ -60,9 +60,9 @@ go;
 /*---- Insert to MeasureSortOrder table ----*/
 /*------------------------------------------*/
 insert into FacilityMeasures_WI.MeasureSortOrder (MeasureSortOrderName)
-values ('Unknown'),
-       ('Largest Score Is High Rank'),
-       ('Largest Score Is Low Rank');
+values ('Descending - Largest Score Is High Rank'), -- excel rank() function: 0 for descending
+       ('Ascending - Largest Score Is Low Rank'),   -- excel rank() function: 1 for ascending
+       ('Unknown');
 go;
 
 /*----------------------------------*/
@@ -95,11 +95,11 @@ begin try
                  left join (
             select cd.MeasureID,
                    max(iif(cd.Score = 'Not Available' or cd.Score = '--', null,
-                           cast(cd.Score as decimal(10, 3))))                                                      as MaxScore,
+                           cast(cd.Score as decimal(10, 3))))                         as MaxScore,
                    min(iif(cd.Score = 'Not Available' or cd.Score = '--', null,
-                           cast(cd.Score as decimal(10, 3))))                                                      as MinScore,
+                           cast(cd.Score as decimal(10, 3))))                         as MinScore,
                    cast(avg(iif(cd.Score = 'Not Available' or cd.Score = '--', null,
-                                cast(cd.Score as decimal(10, 3)))) as decimal(10, 3))                              as AvgScore
+                                cast(cd.Score as decimal(10, 3)))) as decimal(10, 3)) as AvgScore
             from DataImport.Complications_and_Deaths cd
             group by cd.MeasureID
         ) as us on us.MeasureID = cd.MeasureID
@@ -110,20 +110,20 @@ begin try
                             no.AverageScoreNoDifferent,
                             iif(b.AverageScoreBetter is not null and w.AverageScoreWorse is not null,
                                 iif(b.AverageScoreBetter > w.AverageScoreWorse,
-                                    2, -- Largest Score Is High Rank
-                                    3 --Largest Score Is Low Rank
+                                    0, -- Largest Score Is High Rank
+                                    1 -- Largest Score Is Low Rank
                                     ),
                                 iif(b.AverageScoreBetter is null,
                                     iif(no.AverageScoreNoDifferent > w.AverageScoreWorse,
-                                        2, -- Largest Score Is High Rank
-                                        3 --Largest Score Is Low Rank
+                                        0, -- Largest Score Is High Rank
+                                        1 -- Largest Score Is Low Rank
                                         ),
                                     iif(w.AverageScoreWorse is null,
                                         iif(b.AverageScoreBetter > no.AverageScoreNoDifferent,
-                                            2, -- Largest Score Is High Rank
-                                            3 --Largest Score Is Low Rank
+                                            0, -- Largest Score Is High Rank
+                                            1 -- Largest Score Is Low Rank
                                             ),
-                                        1
+                                        2 -- score sort order is unknown
                                         )
                                     )
                                 ) as SortOrderID
@@ -170,7 +170,7 @@ begin try
                  ) no on no.MeasureName = cd.MeasureName
         ) as so on so.MeasureName = cd.MeasureName
         where State = 'WI'
-          and CountyName in ('Milwaukee', 'Waukesha', 'Washington')
+          and CountyName in ('Milwaukee', 'Waukesha', 'Washington') -- remove if all of WI is wanted
 
 
           -- union
@@ -189,11 +189,11 @@ begin try
                  left join (
             select hai.MeasureID,
                    max(iif(hai.Score = 'Not Available' or hai.Score = '--', null,
-                           cast(hai.Score as decimal(10, 3))))                                                        as MaxScore,
+                           cast(hai.Score as decimal(10, 3))))                         as MaxScore,
                    min(iif(hai.Score = 'Not Available' or hai.Score = '--', null,
-                           cast(hai.Score as decimal(10, 3))))                                                        as MinScore,
+                           cast(hai.Score as decimal(10, 3))))                         as MinScore,
                    cast(avg(iif(hai.Score = 'Not Available' or hai.Score = '--', null,
-                                cast(hai.Score as decimal(10, 3)))) as decimal(10, 3))                                as AvgScore
+                                cast(hai.Score as decimal(10, 3)))) as decimal(10, 3)) as AvgScore
             from DataImport.Healthcare_Associated_Infections hai
             group by hai.MeasureID
         ) as us on us.MeasureID = hai.MeasureID
@@ -205,20 +205,20 @@ begin try
                             no.AverageScoreNoDifferent,
                             iif(b.AverageScoreBetter is not null and w.AverageScoreWorse is not null,
                                 iif(b.AverageScoreBetter > w.AverageScoreWorse,
-                                    2, -- Largest Score Is High Rank
-                                    3 --Largest Score Is Low Rank
+                                    0, -- Largest Score Is High Rank
+                                    1 --Largest Score Is Low Rank
                                     ),
                                 iif(b.AverageScoreBetter is null,
                                     iif(no.AverageScoreNoDifferent > w.AverageScoreWorse,
-                                        2, -- Largest Score Is High Rank
-                                        3 --Largest Score Is Low Rank
+                                        0, -- Largest Score Is High Rank
+                                        1 --Largest Score Is Low Rank
                                         ),
                                     iif(w.AverageScoreWorse is null,
                                         iif(b.AverageScoreBetter > no.AverageScoreNoDifferent,
-                                            2, -- Largest Score Is High Rank
-                                            3 --Largest Score Is Low Rank
+                                            0, -- Largest Score Is High Rank
+                                            1 --Largest Score Is Low Rank
                                             ),
-                                        1
+                                        2 -- score sort order is unknown
                                         )
                                     )
                                 ) as SortOrderID
@@ -276,9 +276,9 @@ begin catch
 end catch
 go;
 
-/*--------------------------------------*/
+/*------------------------------------------*/
 /*---- Insert to FacilityMeasures table ----*/
-/*--------------------------------------*/
+/*------------------------------------------*/
 -- insert into FacilityMeasures table
 begin try
     -- begin try

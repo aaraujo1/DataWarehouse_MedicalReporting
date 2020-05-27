@@ -131,8 +131,7 @@ begin
     on tgt.FacilityID = src.FacilityID and tgt.FacilityName = src.FacilityName -- ensures ID and Name are the same
     when matched then
         update
-        set tgt.FacilityName        = src.FacilityName,
-            tgt.FacilityAddress     = src.Address,
+        set tgt.FacilityAddress     = src.Address,
             tgt.FacilityCity        = src.City,
             tgt.FacilityState       = src.State,
             tgt.FacilityZipCode     = src.ZipCode,
@@ -180,6 +179,7 @@ from FacilityMeasures_WI_DW.DimFacility;
 * Change Log
 * ---------------------------
 * 05/24/2020 - included merge on FacilityMeasureID
+* 05/27/2020 - included MeasureSortOrderNumber for excel rank() function
 *
 * ***********************************/
 create or alter procedure FacilityMeasures_WI_DW.FactMeasure_upsert
@@ -198,6 +198,7 @@ begin
                m.NationalScoreMin,
                m.NationalScoreAverage,
                mso.MeasureSortOrderName,
+               mso.MeasureSortOrderID,
                mt.MeasureTypeName,
                fm.StartDate,
                fm.EndDate,
@@ -238,6 +239,7 @@ begin
                 NationalScoreLow,
                 NationalScoreAverage,
                 MeasureSortOrderName,
+                MeasureSortOrderNumber,
                 MeasureTypeName,
                 StartDate,
                 EndDate,
@@ -254,6 +256,7 @@ begin
                 src.NationalScoreMin,
                 src.NationalScoreAverage,
                 src.MeasureSortOrderName,
+                src.MeasureSortOrderID,
                 src.MeasureTypeName,
                 src.StartDate,
                 src.EndDate,
@@ -279,7 +282,7 @@ from FacilityMeasures_WI_DW.FactMeasure fm
 /*----------- ETL Control -----------*/
 /*-----------------------------------*/
 /*********************************
-* Procedure ETL_Control
+* Procedure DW_ETL_Control
 *
 * Author: André Araujo
 * Created: 05/23/2020
@@ -287,7 +290,7 @@ from FacilityMeasures_WI_DW.FactMeasure fm
 * This procedure populates the FacilityMeasures_WI_DW Data Warehouse.
 *
 * ***********************************/
-create or alter procedure FacilityMeasures_WI_DW.ETL_Control
+create or alter procedure FacilityMeasures_WI_DW.DW_ETL_Control
 as
 begin
 
@@ -304,5 +307,5 @@ end;
 go;
 
 -- test procedure
-exec FacilityMeasures_WI_DW.ETL_Control
+exec FacilityMeasures_WI_DW.DW_ETL_Control
 -- no duplicates created

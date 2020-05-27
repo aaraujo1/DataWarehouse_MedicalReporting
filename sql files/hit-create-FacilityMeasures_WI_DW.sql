@@ -12,15 +12,15 @@
 -- for facilities
 create table FacilityMeasures_WI_DW.[DimFacility]
 (
-    [FacilityKey]  int identity (1,1),
-    [FacilityID]   int          not null,
-    [FacilityName] varchar(100) not null,
-    [FacilityAddress]      varchar(100) null,
-    [FacilityCity]         varchar(50)  null,
-    [FacilityState]        char(2)      not null,
-    [FacilityZipCode]      varchar(5)   null,
-    [FacilityCountyName]   varchar(50)  not null,
-    [FacilityPhoneNumber]  varchar(20)  null,
+    [FacilityKey]         int identity (1,1),
+    [FacilityID]          int          not null,
+    [FacilityName]        varchar(100) not null,
+    [FacilityAddress]     varchar(100) null,
+    [FacilityCity]        varchar(50)  null,
+    [FacilityState]       char(2)      not null,
+    [FacilityZipCode]     varchar(5)   null,
+    [FacilityCountyName]  varchar(50)  not null,
+    [FacilityPhoneNumber] varchar(20)  null,
     constraint pk_DimFacility primary key (FacilityKey)
 );
 go;
@@ -60,6 +60,7 @@ create table FacilityMeasures_WI_DW.[FactMeasure]
     [NationalScoreLow]        decimal(10, 3) not null,
     [NationalScoreAverage]    decimal(10, 3) not null,
     [MeasureSortOrderName]    varchar(100)   not null,
+    [MeasureSortOrderNumber]  tinyint        not null, -- to help with excel rank() function
     [MeasureTypeName]         varchar(100)   not null,
     [StartDate]               date           not null,
     [EndDate]                 date           not null,

@@ -39,7 +39,7 @@ go;
 -- table for measure sort order
 create table FacilityMeasures_US.[MeasureSortOrder]
 (
-    [MeasureSortOrderID]   tinyint identity (1,1),
+    [MeasureSortOrderID]   tinyint identity (0,1), -- seed 0 to help with excel rank() function
     [MeasureSortOrderName] varchar(100) not null,
     constraint pk_MeasureSortOrder primary key ([MeasureSortOrderID])
 );

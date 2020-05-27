@@ -56,9 +56,9 @@ go;
 /*---- Insert to MeasureSortOrder table ----*/
 /*------------------------------------------*/
 insert into FacilityMeasures_US.MeasureSortOrder (MeasureSortOrderName)
-values ('Unknown'),
-       ('Largest Score Is High Rank'),
-       ('Largest Score Is Low Rank');
+values ('Descending - Largest Score Is High Rank'), -- excel rank() function: 0 for descending
+       ('Ascending - Largest Score Is Low Rank'), -- excel rank() function: 1 for ascending
+       ('Unknown');
 go;
 
 /*----------------------------------*/
@@ -96,20 +96,20 @@ begin try
                             no.AverageScoreNoDifferent,
                             iif(b.AverageScoreBetter is not null and w.AverageScoreWorse is not null,
                                 iif(b.AverageScoreBetter > w.AverageScoreWorse,
-                                    2, -- Largest Score Is High Rank
-                                    3 --Largest Score Is Low Rank
+                                    0, -- Largest Score Is High Rank
+                                    1 --Largest Score Is Low Rank
                                     ),
                                 iif(b.AverageScoreBetter is null,
                                     iif(no.AverageScoreNoDifferent > w.AverageScoreWorse,
-                                        2, -- Largest Score Is High Rank
-                                        3 --Largest Score Is Low Rank
+                                        0, -- Largest Score Is High Rank
+                                        1 --Largest Score Is Low Rank
                                         ),
                                     iif(w.AverageScoreWorse is null,
                                         iif(b.AverageScoreBetter > no.AverageScoreNoDifferent,
-                                            2, -- Largest Score Is High Rank
-                                            3 --Largest Score Is Low Rank
+                                            0, -- Largest Score Is High Rank
+                                            1 --Largest Score Is Low Rank
                                             ),
-                                        1
+                                        2 -- score sort order is unknown
                                         )
                                     )
                                 ) as SortOrderID
@@ -177,20 +177,20 @@ begin try
                             no.AverageScoreNoDifferent,
                             iif(b.AverageScoreBetter is not null and w.AverageScoreWorse is not null,
                                 iif(b.AverageScoreBetter > w.AverageScoreWorse,
-                                    2, -- Largest Score Is High Rank
-                                    3 --Largest Score Is Low Rank
+                                    0, -- Largest Score Is High Rank
+                                    1 --Largest Score Is Low Rank
                                     ),
                                 iif(b.AverageScoreBetter is null,
                                     iif(no.AverageScoreNoDifferent > w.AverageScoreWorse,
-                                        2, -- Largest Score Is High Rank
-                                        3 --Largest Score Is Low Rank
+                                        0, -- Largest Score Is High Rank
+                                        1 --Largest Score Is Low Rank
                                         ),
                                     iif(w.AverageScoreWorse is null,
                                         iif(b.AverageScoreBetter > no.AverageScoreNoDifferent,
-                                            2, -- Largest Score Is High Rank
-                                            3 --Largest Score Is Low Rank
+                                            0, -- Largest Score Is High Rank
+                                            1 --Largest Score Is Low Rank
                                             ),
-                                        1
+                                        2 -- score sort order is unknown
                                         )
                                     )
                                 ) as SortOrderID
@@ -239,7 +239,6 @@ begin try
         group by hai.MeasureID, hai.MeasureName, so.SortOrderID
 
         order by MeasureID
-
     commit; -- if no errors, commit
 
 end try
