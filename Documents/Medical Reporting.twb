@@ -13,8 +13,8 @@
     <preference name='ui.shelf.height' value='26' />
   </preferences>
   <datasources>
-    <datasource caption='Model (Medical Reporting)' inline='true' name='msolap.1yblto302k211s1bawpwr11az5gy' version='18.1'>
-      <connection authentication='sspi' class='msolap' convert-to-extract-prompted='no' dbname='Medical Reporting' filename='' server='localhost' tablename='Model'>
+    <datasource caption='Model (Medicare Reporting)' inline='true' name='msolap.08vlpjk1l5aoqf1fgmjnm0bpvlx1' version='18.1'>
+      <connection authentication='msolap' class='msolap' convert-to-extract-prompted='no' dbname='Medicare Reporting' filename='' server='bitsql.wctc.edu' tablename='Model' username='MedicareReporting'>
         <metadata-records>
           <metadata-record class='dimension'>
             <remote-name>[Date]</remote-name>
@@ -24,10 +24,10 @@
             <caption>Date</caption>
             <local-type>datetime</local-type>
             <aggregation>Count</aggregation>
-            <approx-count>1971</approx-count>
+            <approx-count>5482</approx-count>
             <contains-null>true</contains-null>
             <attributes>
-              <attribute datatype='string' name='DEFAULT_HIERARCHY'>&quot;[Date].[Calendar]&quot;</attribute>
+              <attribute datatype='string' name='DEFAULT_HIERARCHY'>&quot;[Date].[Is Weekend]&quot;</attribute>
             </attributes>
           </metadata-record>
           <metadata-record class='dimension'>
@@ -53,7 +53,7 @@
             <approx-count>831</approx-count>
             <contains-null>true</contains-null>
             <attributes>
-              <attribute datatype='string' name='DEFAULT_HIERARCHY'>&quot;[Facility Scores].[Measure Sort Order Number]&quot;</attribute>
+              <attribute datatype='string' name='DEFAULT_HIERARCHY'>&quot;[Facility Scores].[Days Recorded]&quot;</attribute>
             </attributes>
           </metadata-record>
           <metadata-record class='dimension'>
@@ -68,22 +68,6 @@
             <contains-null>true</contains-null>
             <attributes>
               <attribute datatype='string' name='DEFAULT_HIERARCHY'>&quot;[Measures]&quot;</attribute>
-            </attributes>
-          </metadata-record>
-          <metadata-record class='hierarchy'>
-            <remote-name>[Date].[Calendar]</remote-name>
-            <remote-type>3</remote-type>
-            <local-name>[Date].[Calendar]</local-name>
-            <parent-name>[Date]</parent-name>
-            <remote-alias>[Date].[Calendar]</remote-alias>
-            <caption>Calendar</caption>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-            <default>true</default>
-            <attributes>
-              <attribute datatype='string' name='ALL_MEMBER'>&quot;[Date].[Calendar].[All]&quot;</attribute>
-              <attribute datatype='string' name='HIERARCHY_DISPLAY_FOLDER'>&quot;&quot;</attribute>
-              <attribute datatype='boolean' name='HIERARCHY_USER'>true</attribute>
             </attributes>
           </metadata-record>
           <metadata-record class='hierarchy'>
@@ -185,6 +169,7 @@
             <caption>Is Weekend</caption>
             <aggregation>Count</aggregation>
             <contains-null>true</contains-null>
+            <default>true</default>
             <attributes>
               <attribute datatype='string' name='ALL_MEMBER'>&quot;[Date].[Is Weekend].[All]&quot;</attribute>
               <attribute datatype='string' name='HIERARCHY_DISPLAY_FOLDER'>&quot;&quot;</attribute>
@@ -249,69 +234,6 @@
               <attribute datatype='string' name='ALL_MEMBER'>&quot;[Date].[Year].[All]&quot;</attribute>
               <attribute datatype='string' name='HIERARCHY_DISPLAY_FOLDER'>&quot;&quot;</attribute>
               <attribute datatype='boolean' name='HIERARCHY_USER'>false</attribute>
-            </attributes>
-          </metadata-record>
-          <metadata-record class='level'>
-            <remote-name>[Date].[Calendar].[(All)]</remote-name>
-            <remote-type>all</remote-type>
-            <local-name>[Date].[Calendar].[(All)]</local-name>
-            <parent-name>[Date].[Calendar]</parent-name>
-            <remote-alias>[Date].[Calendar].[(All)].[MEMBER_UNIQUE_NAME]</remote-alias>
-            <caption>(All)</caption>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='level'>
-            <remote-name>[Date].[Calendar].[Year]</remote-name>
-            <local-name>[Date].[Calendar].[Year]</local-name>
-            <parent-name>[Date].[Calendar]</parent-name>
-            <remote-alias>[Date].[Calendar].[Year].[MEMBER_UNIQUE_NAME]</remote-alias>
-            <caption>Year</caption>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='SQL_COLUMN_NAME'>&quot;NAME( [$Date].[Year] )&quot;</attribute>
-            </attributes>
-          </metadata-record>
-          <metadata-record class='level'>
-            <remote-name>[Date].[Calendar].[Month Name]</remote-name>
-            <local-name>[Date].[Calendar].[Month Name]</local-name>
-            <parent-name>[Date].[Calendar]</parent-name>
-            <remote-alias>[Date].[Calendar].[Month Name].[MEMBER_UNIQUE_NAME]</remote-alias>
-            <caption>Month Name</caption>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='SQL_COLUMN_NAME'>&quot;NAME( [$Date].[Month Name] )&quot;</attribute>
-            </attributes>
-          </metadata-record>
-          <metadata-record class='level'>
-            <remote-name>[Date].[Calendar].[Day Of Week Name]</remote-name>
-            <local-name>[Date].[Calendar].[Day Of Week Name]</local-name>
-            <parent-name>[Date].[Calendar]</parent-name>
-            <remote-alias>[Date].[Calendar].[Day Of Week Name].[MEMBER_UNIQUE_NAME]</remote-alias>
-            <caption>Day Of Week Name</caption>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='SQL_COLUMN_NAME'>&quot;NAME( [$Date].[Day Of Week Name] )&quot;</attribute>
-            </attributes>
-          </metadata-record>
-          <metadata-record class='level'>
-            <remote-name>[Date].[Calendar].[Day Of Month]</remote-name>
-            <local-name>[Date].[Calendar].[Day Of Month]</local-name>
-            <parent-name>[Date].[Calendar]</parent-name>
-            <remote-alias>[Date].[Calendar].[Day Of Month].[MEMBER_UNIQUE_NAME]</remote-alias>
-            <caption>Day Of Month</caption>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='SQL_COLUMN_NAME'>&quot;NAME( [$Date].[Day Of Month] )&quot;</attribute>
             </attributes>
           </metadata-record>
           <metadata-record class='level'>
@@ -624,21 +546,6 @@
             </attributes>
           </metadata-record>
           <metadata-record class='hierarchy'>
-            <remote-name>[Facilities].[Facility Key]</remote-name>
-            <remote-type>3</remote-type>
-            <local-name>[Facilities].[Facility Key]</local-name>
-            <parent-name>[Facilities]</parent-name>
-            <remote-alias>[Facilities].[Facility Key]</remote-alias>
-            <caption>Facility Key</caption>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='ALL_MEMBER'>&quot;[Facilities].[Facility Key].[All]&quot;</attribute>
-              <attribute datatype='string' name='HIERARCHY_DISPLAY_FOLDER'>&quot;&quot;</attribute>
-              <attribute datatype='boolean' name='HIERARCHY_USER'>false</attribute>
-            </attributes>
-          </metadata-record>
-          <metadata-record class='hierarchy'>
             <remote-name>[Facilities].[Facility Name]</remote-name>
             <remote-type>3</remote-type>
             <local-name>[Facilities].[Facility Name]</local-name>
@@ -772,30 +679,6 @@
             </attributes>
           </metadata-record>
           <metadata-record class='level'>
-            <remote-name>[Facilities].[Facility Key].[(All)]</remote-name>
-            <remote-type>all</remote-type>
-            <local-name>[Facilities].[Facility Key].[(All)]</local-name>
-            <parent-name>[Facilities].[Facility Key]</parent-name>
-            <remote-alias>[Facilities].[Facility Key].[(All)].[MEMBER_UNIQUE_NAME]</remote-alias>
-            <caption>(All)</caption>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='level'>
-            <remote-name>[Facilities].[Facility Key].[Facility Key]</remote-name>
-            <local-name>[Facilities].[Facility Key].[Facility Key]</local-name>
-            <parent-name>[Facilities].[Facility Key]</parent-name>
-            <remote-alias>[Facilities].[Facility Key].[Facility Key].[MEMBER_UNIQUE_NAME]</remote-alias>
-            <caption>Facility Key</caption>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='SQL_COLUMN_NAME'>&quot;NAME( [$Facilities].[Facility Key] )&quot;</attribute>
-            </attributes>
-          </metadata-record>
-          <metadata-record class='level'>
             <remote-name>[Facilities].[Facility Name].[(All)]</remote-name>
             <remote-type>all</remote-type>
             <local-name>[Facilities].[Facility Name].[(All)]</local-name>
@@ -900,6 +783,7 @@
             <caption>Days Recorded</caption>
             <aggregation>Count</aggregation>
             <contains-null>true</contains-null>
+            <default>true</default>
             <attributes>
               <attribute datatype='string' name='ALL_MEMBER'>&quot;[Facility Scores].[Days Recorded].[All]&quot;</attribute>
               <attribute datatype='string' name='HIERARCHY_DISPLAY_FOLDER'>&quot;&quot;</attribute>
@@ -917,21 +801,6 @@
             <contains-null>true</contains-null>
             <attributes>
               <attribute datatype='string' name='ALL_MEMBER'>&quot;[Facility Scores].[End Date].[All]&quot;</attribute>
-              <attribute datatype='string' name='HIERARCHY_DISPLAY_FOLDER'>&quot;&quot;</attribute>
-              <attribute datatype='boolean' name='HIERARCHY_USER'>false</attribute>
-            </attributes>
-          </metadata-record>
-          <metadata-record class='hierarchy'>
-            <remote-name>[Facility Scores].[Facility Key]</remote-name>
-            <remote-type>3</remote-type>
-            <local-name>[Facility Scores].[Facility Key]</local-name>
-            <parent-name>[Facility Scores]</parent-name>
-            <remote-alias>[Facility Scores].[Facility Key]</remote-alias>
-            <caption>Facility Key</caption>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='ALL_MEMBER'>&quot;[Facility Scores].[Facility Key].[All]&quot;</attribute>
               <attribute datatype='string' name='HIERARCHY_DISPLAY_FOLDER'>&quot;&quot;</attribute>
               <attribute datatype='boolean' name='HIERARCHY_USER'>false</attribute>
             </attributes>
@@ -975,7 +844,6 @@
             <caption>Measure Sort Order Number</caption>
             <aggregation>Count</aggregation>
             <contains-null>true</contains-null>
-            <default>true</default>
             <attributes>
               <attribute datatype='string' name='ALL_MEMBER'>&quot;[Facility Scores].[Measure Sort Order Number].[All]&quot;</attribute>
               <attribute datatype='string' name='HIERARCHY_DISPLAY_FOLDER'>&quot;&quot;</attribute>
@@ -1133,30 +1001,6 @@
             <contains-null>true</contains-null>
             <attributes>
               <attribute datatype='string' name='SQL_COLUMN_NAME'>&quot;NAME( [$Facility Scores].[End Date] )&quot;</attribute>
-            </attributes>
-          </metadata-record>
-          <metadata-record class='level'>
-            <remote-name>[Facility Scores].[Facility Key].[(All)]</remote-name>
-            <remote-type>all</remote-type>
-            <local-name>[Facility Scores].[Facility Key].[(All)]</local-name>
-            <parent-name>[Facility Scores].[Facility Key]</parent-name>
-            <remote-alias>[Facility Scores].[Facility Key].[(All)].[MEMBER_UNIQUE_NAME]</remote-alias>
-            <caption>(All)</caption>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='level'>
-            <remote-name>[Facility Scores].[Facility Key].[Facility Key]</remote-name>
-            <local-name>[Facility Scores].[Facility Key].[Facility Key]</local-name>
-            <parent-name>[Facility Scores].[Facility Key]</parent-name>
-            <remote-alias>[Facility Scores].[Facility Key].[Facility Key].[MEMBER_UNIQUE_NAME]</remote-alias>
-            <caption>Facility Key</caption>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='SQL_COLUMN_NAME'>&quot;NAME( [$Facility Scores].[Facility Key] )&quot;</attribute>
             </attributes>
           </metadata-record>
           <metadata-record class='level'>
@@ -1405,14 +1249,14 @@
             <local-name>[High Score]</local-name>
             <remote-alias>[Measures].[High Score]</remote-alias>
             <caption>High Score</caption>
-            <family>Facility Scores Measures</family>
+            <family>Facility Score Measures</family>
             <local-type>real</local-type>
             <aggregation>Avg</aggregation>
             <contains-null>true</contains-null>
             <attributes>
               <attribute datatype='string' name='EXPRESSION'>&quot;MAX(&apos;Facility Scores&apos;[Score])&quot;</attribute>
               <attribute datatype='string' name='MEASURE_DISPLAY_FOLDER'>&quot;&quot;</attribute>
-              <attribute datatype='string' name='SQL_COLUMN_NAME'>&quot;[Facility Scores Measures].[High Score]&quot;</attribute>
+              <attribute datatype='string' name='SQL_COLUMN_NAME'>&quot;[Facility Score Measures].[High Score]&quot;</attribute>
             </attributes>
           </metadata-record>
           <metadata-record class='measure'>
@@ -1421,14 +1265,14 @@
             <local-name>[Low Score]</local-name>
             <remote-alias>[Measures].[Low Score]</remote-alias>
             <caption>Low Score</caption>
-            <family>Facility Scores Measures</family>
+            <family>Facility Score Measures</family>
             <local-type>real</local-type>
             <aggregation>Avg</aggregation>
             <contains-null>true</contains-null>
             <attributes>
               <attribute datatype='string' name='EXPRESSION'>&quot;MIN(&apos;Facility Scores&apos;[Score])&quot;</attribute>
               <attribute datatype='string' name='MEASURE_DISPLAY_FOLDER'>&quot;&quot;</attribute>
-              <attribute datatype='string' name='SQL_COLUMN_NAME'>&quot;[Facility Scores Measures].[Low Score]&quot;</attribute>
+              <attribute datatype='string' name='SQL_COLUMN_NAME'>&quot;[Facility Score Measures].[Low Score]&quot;</attribute>
             </attributes>
           </metadata-record>
           <metadata-record class='measure'>
@@ -1437,14 +1281,14 @@
             <local-name>[Average Score]</local-name>
             <remote-alias>[Measures].[Average Score]</remote-alias>
             <caption>Average Score</caption>
-            <family>Facility Scores Measures</family>
+            <family>Facility Score Measures</family>
             <local-type>real</local-type>
             <aggregation>Avg</aggregation>
             <contains-null>true</contains-null>
             <attributes>
               <attribute datatype='string' name='EXPRESSION'>&quot;AVERAGE(&apos;Facility Scores&apos;[Score])&quot;</attribute>
               <attribute datatype='string' name='MEASURE_DISPLAY_FOLDER'>&quot;&quot;</attribute>
-              <attribute datatype='string' name='SQL_COLUMN_NAME'>&quot;[Facility Scores Measures].[Average Score]&quot;</attribute>
+              <attribute datatype='string' name='SQL_COLUMN_NAME'>&quot;[Facility Score Measures].[Average Score]&quot;</attribute>
             </attributes>
           </metadata-record>
           <metadata-record class='granularity'>
@@ -1470,25 +1314,14 @@
             </attributes>
           </metadata-record>
           <metadata-record class='granularity'>
-            <remote-name>Facility Scores</remote-name>
+            <remote-name>Facility Score Measures</remote-name>
             <remote-type>0</remote-type>
-            <remote-alias>Facility Scores</remote-alias>
+            <remote-alias>Facility Score Measures</remote-alias>
             <aggregation>Count</aggregation>
             <contains-null>true</contains-null>
             <attributes>
-              <attribute datatype='string' name='DIMENSION_GRANULARITY'>&quot;[Date].[Date Key]&quot;</attribute>
-              <attribute datatype='string' name='DIMENSION_UNIQUE_NAME'>&quot;[Date]&quot;</attribute>
-            </attributes>
-          </metadata-record>
-          <metadata-record class='granularity'>
-            <remote-name>Facility Scores</remote-name>
-            <remote-type>0</remote-type>
-            <remote-alias>Facility Scores</remote-alias>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DIMENSION_GRANULARITY'>&quot;[Facilities].[Facility Key]&quot;</attribute>
-              <attribute datatype='string' name='DIMENSION_UNIQUE_NAME'>&quot;[Facilities]&quot;</attribute>
+              <attribute datatype='string' name='DIMENSION_GRANULARITY'>&quot;[Facility Score Measures].[RowNumber-2662979B-1795-4F74-8F37-6A1BA8059B61]&quot;</attribute>
+              <attribute datatype='string' name='DIMENSION_UNIQUE_NAME'>&quot;[Facility Score Measures]&quot;</attribute>
             </attributes>
           </metadata-record>
           <metadata-record class='granularity'>
@@ -1502,26 +1335,21 @@
               <attribute datatype='string' name='DIMENSION_UNIQUE_NAME'>&quot;[Facility Scores]&quot;</attribute>
             </attributes>
           </metadata-record>
-          <metadata-record class='granularity'>
-            <remote-name>Facility Scores Measures</remote-name>
-            <remote-type>0</remote-type>
-            <remote-alias>Facility Scores Measures</remote-alias>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DIMENSION_GRANULARITY'>&quot;[Facility Scores Measures].[RowNumber-2662979B-1795-4F74-8F37-6A1BA8059B61]&quot;</attribute>
-              <attribute datatype='string' name='DIMENSION_UNIQUE_NAME'>&quot;[Facility Scores Measures]&quot;</attribute>
-            </attributes>
-          </metadata-record>
         </metadata-records>
       </connection>
       <aliases enabled='yes' />
+      <column approximate-count='5482' datatype='string' datatype-customized='true' name='[Date].[Date].[Date]' role='dimension' type='nominal' user-datatype='date' />
       <column approximate-count='10' datatype='string' name='[Facilities].[Facility City].[Facility City]' role='dimension' semantic-role='[City].[Name]' type='nominal' />
       <column approximate-count='3' datatype='string' name='[Facilities].[Facility County Name].[Facility County Name]' role='dimension' semantic-role='[County].[Name]' type='nominal' />
       <column approximate-count='1' datatype='string' name='[Facilities].[Facility State].[Facility State]' role='dimension' semantic-role='[State].[Name]' type='nominal' />
       <column approximate-count='13' datatype='string' name='[Facilities].[Facility Zip Code].[Facility Zip Code]' role='dimension' semantic-role='[ZipCode].[Name]' type='nominal' />
+      <column approximate-count='3' datatype='string' datatype-customized='true' name='[Facility Scores].[End Date].[End Date]' role='dimension' type='nominal' user-datatype='date' />
+      <column approximate-count='54' datatype='string' datatype-customized='true' name='[Facility Scores].[National Score Average].[National Score Average]' role='dimension' type='nominal' user-datatype='real' />
+      <column approximate-count='55' datatype='string' datatype-customized='true' name='[Facility Scores].[National Score High].[National Score High]' role='dimension' type='nominal' user-datatype='real' />
+      <column approximate-count='31' datatype='string' datatype-customized='true' name='[Facility Scores].[National Score Low].[National Score Low]' role='dimension' type='nominal' user-datatype='real' />
       <column approximate-count='488' datatype='string' datatype-customized='true' name='[Facility Scores].[Score].[Score]' role='dimension' type='nominal' user-datatype='real' />
-      <layout _.fcp.SchemaViewerObjectModel.false...dim-percentage='0.5' _.fcp.SchemaViewerObjectModel.false...measure-percentage='0.4' dim-ordering='ordinal' measure-ordering='ordinal' show-aliased-fields='true' show-hidden-fields='true' show-structure='true' />
+      <column approximate-count='4' datatype='string' datatype-customized='true' name='[Facility Scores].[Start Date].[Start Date]' role='dimension' type='nominal' user-datatype='date' />
+      <layout _.fcp.SchemaViewerObjectModel.false...dim-percentage='0.5' _.fcp.SchemaViewerObjectModel.false...measure-percentage='0.4' dim-ordering='ordinal' measure-ordering='ordinal' show-structure='true' />
       <semantic-values>
         <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
       </semantic-values>
@@ -1532,46 +1360,53 @@
       <table>
         <view>
           <datasources>
-            <datasource caption='Model (Medical Reporting)' name='msolap.1yblto302k211s1bawpwr11az5gy' />
+            <datasource caption='Model (Medicare Reporting)' name='msolap.08vlpjk1l5aoqf1fgmjnm0bpvlx1' />
           </datasources>
-          <datasource-dependencies datasource='msolap.1yblto302k211s1bawpwr11az5gy'>
-            <column-instance column='[Facility Scores].[Score].[Score]' derivation='None' name='[Facility Scores].[Score].[none:Score:qk]' pivot='key' type='quantitative' />
+          <datasource-dependencies datasource='msolap.08vlpjk1l5aoqf1fgmjnm0bpvlx1'>
+            <column-instance column='[Facilities].[Facility Name].[Facility Name]' derivation='None' name='[Facilities].[Facility Name].[none:Facility Name:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Facility Scores].[Score].[Score]' derivation='None' name='[Facility Scores].[Score].[none:Score:nk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
-          <filter class='categorical' column='[msolap.1yblto302k211s1bawpwr11az5gy].[Facilities].[Facility Name]'>
-            <groupfilter function='hierarchy-members' hierarchy='[Facilities].[Facility Name]' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-level='0' user:ui-marker='enumerate' />
+          <filter class='categorical' column='[msolap.08vlpjk1l5aoqf1fgmjnm0bpvlx1].[Facilities].[Facility Name]'>
+            <groupfilter function='member' level='[Facilities].[Facility Name].[Facility Name]' member='&quot;[Facilities].[Facility Name].&amp;[AURORA ST LUKES MEDICAL CENTER]&quot;' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-level='0' user:ui-marker='enumerate' />
           </filter>
-          <filter class='categorical' column='[msolap.1yblto302k211s1bawpwr11az5gy].[Facility Scores].[Facility Key]'>
-            <groupfilter function='except' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
-              <groupfilter function='hierarchy-members' hierarchy='[Facility Scores].[Facility Key]' />
-              <groupfilter from='&quot;[Facility Scores].[Facility Key].&amp;[11]&quot;' function='range' level='[Facility Scores].[Facility Key].[Facility Key]' to='&quot;[Facility Scores].[Facility Key].&amp;[16]&quot;' />
-            </groupfilter>
-          </filter>
-          <filter class='categorical' column='[msolap.1yblto302k211s1bawpwr11az5gy].[Facility Scores].[Measure Name]'>
+          <filter class='categorical' column='[msolap.08vlpjk1l5aoqf1fgmjnm0bpvlx1].[Facility Scores].[Measure Name]'>
             <groupfilter function='member' level='[Facility Scores].[Measure Name].[Measure Name]' member='&quot;[Facility Scores].[Measure Name].&amp;[Broken hip from a fall after surgery]&quot;' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
           </filter>
           <slices>
-            <column>[msolap.1yblto302k211s1bawpwr11az5gy].[Facility Scores].[Measure Name]</column>
-            <column>[msolap.1yblto302k211s1bawpwr11az5gy].[Facility Scores].[Facility Key]</column>
-            <column>[msolap.1yblto302k211s1bawpwr11az5gy].[Facilities].[Facility Name]</column>
+            <column>[msolap.08vlpjk1l5aoqf1fgmjnm0bpvlx1].[Facility Scores].[Measure Name]</column>
+            <column>[msolap.08vlpjk1l5aoqf1fgmjnm0bpvlx1].[Facilities].[Facility Name]</column>
           </slices>
           <aggregation value='true' />
         </view>
-        <style />
+        <style>
+          <style-rule element='axis'>
+            <format attr='width' field='[msolap.08vlpjk1l5aoqf1fgmjnm0bpvlx1].[Facility Scores].[Score].[none:Score:nk]' value='118' />
+          </style-rule>
+          <style-rule element='cell'>
+            <format attr='width' value='176' />
+          </style-rule>
+          <style-rule element='header'>
+            <format attr='width' field='[msolap.08vlpjk1l5aoqf1fgmjnm0bpvlx1].[Facilities].[Facility Name].[none:Facility Name:nk]' value='396' />
+          </style-rule>
+        </style>
         <panes>
           <pane selection-relaxation-option='selection-relaxation-allow'>
             <view>
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
-            <encodings>
-              <lod column='[msolap.1yblto302k211s1bawpwr11az5gy].[Facilities].[Facility Name].[Facility Name]' />
-            </encodings>
+            <style>
+              <style-rule element='pane'>
+                <format attr='minwidth' value='-1' />
+                <format attr='maxwidth' value='-1' />
+              </style-rule>
+            </style>
           </pane>
         </panes>
-        <rows />
-        <cols>[msolap.1yblto302k211s1bawpwr11az5gy].[Facility Scores].[Score].[none:Score:qk]</cols>
+        <rows>[msolap.08vlpjk1l5aoqf1fgmjnm0bpvlx1].[Facilities].[Facility Name].[none:Facility Name:nk]</rows>
+        <cols>[msolap.08vlpjk1l5aoqf1fgmjnm0bpvlx1].[Facility Scores].[Score].[none:Score:nk]</cols>
       </table>
-      <simple-id uuid='{B29086CF-ACCE-4487-AD99-6A336A332196}' />
+      <simple-id uuid='{7E8992A9-6D12-4370-ADB3-86CA2FFB9C78}' />
     </worksheet>
   </worksheets>
   <windows source-height='30'>
@@ -1599,72 +1434,32 @@
       <viewpoint>
         <highlight>
           <color-one-way>
-            <field>[msolap.1yblto302k211s1bawpwr11az5gy].[Facilities].[Facility Name].[Facility Name]</field>
-            <field>[msolap.1yblto302k211s1bawpwr11az5gy].[Facilities].[Facility Name].[none:Facility Name:nk]</field>
-            <field>[msolap.1yblto302k211s1bawpwr11az5gy].[Facility Measures].[Measure Name].[none:Measure Name:nk]</field>
-            <field>[msolap.1yblto302k211s1bawpwr11az5gy].[Facility Measures].[Score].[none:Score:nk]</field>
-            <field>[msolap.1yblto302k211s1bawpwr11az5gy].[Facility Scores].[Facility Key].[none:Facility Key:nk]</field>
-            <field>[msolap.1yblto302k211s1bawpwr11az5gy].[Facility Scores].[Measure Name].[none:Measure Name:nk]</field>
-            <field>[msolap.1yblto302k211s1bawpwr11az5gy].[Facility].[Facility Name].[none:Facility Name:nk]</field>
+            <field>[msolap.08vlpjk1l5aoqf1fgmjnm0bpvlx1].[Facilities].[Facility Name].[none:Facility Name:nk]</field>
+            <field>[msolap.08vlpjk1l5aoqf1fgmjnm0bpvlx1].[Facility Scores].[Measure Name].[none:Measure Name:nk]</field>
+            <field>[msolap.08vlpjk1l5aoqf1fgmjnm0bpvlx1].[Facility Scores].[Score].[none:Score:nk]</field>
           </color-one-way>
         </highlight>
       </viewpoint>
-      <simple-id uuid='{9720AD3E-4FFC-47E2-8904-D477D3D646BB}' />
+      <simple-id uuid='{0C079E31-2873-48A9-A170-763C8E36E0D5}' />
     </window>
   </windows>
   <thumbnails>
-    <thumbnail height='158' name='Sheet 1' width='384'>
-      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
-      AAAY9V/J8g6cJipbeQAAAABJRU5ErkJggg==
+    <thumbnail height='198' name='Sheet 1' width='384'>
+      iVBORw0KGgoAAAANSUhEUgAAAYAAAADGCAYAAADbsVd6AAAACXBIWXMAAA7DAAAOwwHHb6hk
+      AAAC0klEQVR4nO3VMQEAIAzAMMC/5yFjRxMF/XpnZg4AOW87AIAdBgAQZQAAUQYAEGUAAFEG
+      ABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAA
+      UQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBl
+      AABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYA
+      EGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABR
+      BgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUA
+      AFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQ
+      ZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEG
+      ABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAA
+      UQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBl
+      AABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYA
+      EGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABR
+      BgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUA
+      AFEGABBlAABRBgAQZQAAUQYAEGUAAFEf3I8FiDRq30MAAAAASUVORK5CYII=
     </thumbnail>
   </thumbnails>
 </workbook>

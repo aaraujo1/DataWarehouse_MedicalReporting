@@ -162,7 +162,6 @@
           {
             "name": "Facility Key",
             "dataType": "int64",
-            "isHidden": true,
             "sourceColumn": "FacilityKey"
           },
           {
@@ -242,7 +241,6 @@
           {
             "name": "Facility Key",
             "dataType": "int64",
-            "isHidden": true,
             "sourceColumn": "FacilityKey"
           },
           {
