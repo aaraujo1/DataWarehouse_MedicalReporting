@@ -1,0 +1,449 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1200,
+  "model": {
+    "culture": "en-US",
+    "dataSources": [
+      {
+        "name": "bitsql",
+        "connectionString": "Provider=SQLNCLI11;Data Source=bitsql.wctc.edu;Initial Catalog=MedicareReportingDW;User ID=MedicareReportingUser;Persist Security Info=true",
+        "impersonationMode": "impersonateAccount",
+        "account": "bitdb\\nkowalchuk",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "SqlServer"
+          }
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "Date",
+        "dataCategory": "Time",
+        "columns": [
+          {
+            "name": "DateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "DateKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Date",
+            "dataType": "dateTime",
+            "isKey": true,
+            "sourceColumn": "Date",
+            "formatString": "General Date",
+            "sourceProviderType": "DBDate"
+          },
+          {
+            "name": "Day Of Month",
+            "dataType": "int64",
+            "sourceColumn": "DayOfMonth",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "Month Number",
+            "dataType": "int64",
+            "sourceColumn": "MonthNumber",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "Month Name",
+            "dataType": "string",
+            "sourceColumn": "MonthName",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "Year",
+            "dataType": "int64",
+            "sourceColumn": "Year",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "Day Of Week Name",
+            "dataType": "string",
+            "sourceColumn": "DayOfWeekName",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "Day Of Week Number",
+            "dataType": "int64",
+            "sourceColumn": "DayOfWeekNumber",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "IsWeekend",
+            "dataType": "boolean",
+            "isHidden": true,
+            "sourceColumn": "IsWeekend",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "Boolean"
+          },
+          {
+            "type": "calculated",
+            "name": "Month Description",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": [
+              " [Month Number]&\" - \"&[Month Name]",
+              ""
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "Day Of Week Description",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": "[Day Of Week Number]&\" - \"&[Day Of Week Name]"
+          },
+          {
+            "type": "calculated",
+            "name": "Day Long Description",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": " [Day Of Week Name]&\", \"&[Month Name]&\" \"&[Day Of Month]&\", \"&[Year]"
+          },
+          {
+            "type": "calculated",
+            "name": "Is Weekend",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": " IF([IsWeekend],\"Weekend\",\"Weekday\")"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Date",
+            "dataView": "full",
+            "source": {
+              "query": " SELECT [FacilityMeasures_WI_DW].[DimDate].* FROM [FacilityMeasures_WI_DW].[DimDate] ",
+              "dataSource": "bitsql"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [FacilityMeasures_WI_DW].[DimDate].* FROM [FacilityMeasures_WI_DW].[DimDate] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DimDate"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "FacilityMeasures_WI_DW"
+          }
+        ]
+      },
+      {
+        "name": "Facilities",
+        "columns": [
+          {
+            "name": "FacilityKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "FacilityKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "FacilityID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "FacilityID",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Facility Name",
+            "dataType": "string",
+            "sourceColumn": "FacilityName",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "Facility Address",
+            "dataType": "string",
+            "sourceColumn": "FacilityAddress",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "Facility City",
+            "dataType": "string",
+            "sourceColumn": "FacilityCity",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "Facility State",
+            "dataType": "string",
+            "sourceColumn": "FacilityState",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "Facility Zip Code",
+            "dataType": "string",
+            "sourceColumn": "FacilityZipCode",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "Facility County Name",
+            "dataType": "string",
+            "sourceColumn": "FacilityCountyName",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "Facility Phone Number",
+            "dataType": "string",
+            "sourceColumn": "FacilityPhoneNumber",
+            "sourceProviderType": "Char"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Facilities",
+            "dataView": "full",
+            "source": {
+              "query": " SELECT [FacilityMeasures_WI_DW].[DimFacility].* FROM [FacilityMeasures_WI_DW].[DimFacility] ",
+              "dataSource": "bitsql"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [FacilityMeasures_WI_DW].[DimFacility].* FROM [FacilityMeasures_WI_DW].[DimFacility] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DimFacility"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "FacilityMeasures_WI_DW"
+          }
+        ]
+      },
+      {
+        "name": "Facility Scores",
+        "columns": [
+          {
+            "name": "MeasureKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "MeasureKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "MeasureID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "MeasureID",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "FacilityKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "FacilityKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "FacilityID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "FacilityID",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "FacilityMeasureID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "FacilityMeasureID",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Measure Name",
+            "dataType": "string",
+            "sourceColumn": "MeasureName",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "Score Compared To National",
+            "dataType": "string",
+            "sourceColumn": "ScoreComparedToNational",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "Score",
+            "dataType": "double",
+            "sourceColumn": "Score",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "National Score High",
+            "dataType": "double",
+            "sourceColumn": "NationalScoreHigh",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "National Score Low",
+            "dataType": "double",
+            "sourceColumn": "NationalScoreLow",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "National Score Average",
+            "dataType": "double",
+            "sourceColumn": "NationalScoreAverage",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "Measure Sort Order Name",
+            "dataType": "string",
+            "sourceColumn": "MeasureSortOrderName",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "Measure Sort Order Number",
+            "dataType": "int64",
+            "sourceColumn": "MeasureSortOrderNumber",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "Measure Type Name",
+            "dataType": "string",
+            "sourceColumn": "MeasureTypeName",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "Start Date",
+            "dataType": "dateTime",
+            "sourceColumn": "StartDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBDate"
+          },
+          {
+            "name": "End Date",
+            "dataType": "dateTime",
+            "sourceColumn": "EndDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBDate"
+          },
+          {
+            "name": "StartDateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "StartDateKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "EndDateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "EndDateKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "type": "calculated",
+            "name": "Days Recorded",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "DATEDIFF([Start Date],[End Date],DAY)"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Facility Scores",
+            "dataView": "full",
+            "source": {
+              "query": " SELECT [FacilityMeasures_WI_DW].[FactMeasure].* FROM [FacilityMeasures_WI_DW].[FactMeasure] ",
+              "dataSource": "bitsql"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [FacilityMeasures_WI_DW].[FactMeasure].* FROM [FacilityMeasures_WI_DW].[FactMeasure] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "FactMeasure"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "FacilityMeasures_WI_DW"
+          }
+        ]
+      },
+      {
+        "name": "Facility Score Measures",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "col1",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "sourceColumn": "[col1]"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "CalculatedTable 1",
+            "source": {
+              "type": "calculated",
+              "expression": "DATATABLE(\"col1\",string,{{\"\"}})"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "High Score",
+            "expression": "MAX('Facility Scores'[Score])"
+          },
+          {
+            "name": "Low Score",
+            "expression": "MIN('Facility Scores'[Score])"
+          },
+          {
+            "name": "Average Score",
+            "expression": "AVERAGE('Facility Scores'[Score])"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "e06fefee-4b90-46a3-baa3-b6d5f8ebe2e9",
+        "fromTable": "Facility Scores",
+        "fromColumn": "EndDateKey",
+        "toTable": "Date",
+        "toColumn": "DateKey",
+        "isActive": false
+      },
+      {
+        "name": "fc9a880b-f6a3-43b4-8b05-1fca324bb564",
+        "fromTable": "Facility Scores",
+        "fromColumn": "StartDateKey",
+        "toTable": "Date",
+        "toColumn": "DateKey"
+      },
+      {
+        "name": "ab6e5ba7-f570-4e72-8704-655db536f147",
+        "fromTable": "Facility Scores",
+        "fromColumn": "FacilityKey",
+        "toTable": "Facilities",
+        "toColumn": "FacilityKey"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "400"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}
