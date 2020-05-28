@@ -381,6 +381,14 @@
           {
             "name": "Average Score",
             "expression": "AVERAGE('Facility Scores'[Score])"
+          },
+          {
+            "name": "Measure Score",
+            "expression": "SUM('Facility Scores'[Score])"
+          },
+          {
+            "name": "Rank",
+            "expression": "RANKX('Facility Scores', [Measure Score], ,DESC,Dense)"
           }
         ]
       }
