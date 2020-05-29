@@ -162,6 +162,7 @@
           {
             "name": "Facility Key",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "FacilityKey"
           },
           {
@@ -241,6 +242,7 @@
           {
             "name": "Facility Key",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "FacilityKey"
           },
           {
@@ -268,6 +270,7 @@
           {
             "name": "Score",
             "dataType": "double",
+            "isHidden": true,
             "sourceColumn": "Score"
           },
           {
@@ -327,6 +330,7 @@
           {
             "name": "Measure Sort Order Number",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "MeasureSortOrderNumber"
           }
         ],
@@ -389,6 +393,10 @@
           {
             "name": "Rank",
             "expression": "RANKX('Facility Scores', [Measure Score], ,DESC,Dense)"
+          },
+          {
+            "name": "Measure Sort Number",
+            "expression": "MAX('Facility Scores'[Measure Sort Order Number])"
           }
         ]
       }
