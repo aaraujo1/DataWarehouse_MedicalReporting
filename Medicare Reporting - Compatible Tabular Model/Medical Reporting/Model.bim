@@ -118,6 +118,7 @@
             "name": "Date",
             "dataView": "full",
             "source": {
+              "type": "query",
               "query": " SELECT [FacilityMeasures_WI_DW].[DimDate].* FROM [FacilityMeasures_WI_DW].[DimDate] ",
               "dataSource": "bitsql"
             }
@@ -164,6 +165,7 @@
           {
             "name": "Facility Address",
             "dataType": "string",
+            "isHidden": true,
             "sourceColumn": "FacilityAddress",
             "sourceProviderType": "Char"
           },
@@ -196,6 +198,13 @@
             "dataType": "string",
             "sourceColumn": "FacilityPhoneNumber",
             "sourceProviderType": "Char"
+          },
+          {
+            "type": "calculated",
+            "name": "Facility Full Address",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": "[Facility Address]&\" \"&[Facility City]&\", \"&[Facility State]&\" \"&[Facility Zip Code]"
           }
         ],
         "partitions": [
@@ -203,6 +212,7 @@
             "name": "Facilities",
             "dataView": "full",
             "source": {
+              "type": "query",
               "query": " SELECT [FacilityMeasures_WI_DW].[DimFacility].* FROM [FacilityMeasures_WI_DW].[DimFacility] ",
               "dataSource": "bitsql"
             }
@@ -276,24 +286,28 @@
           {
             "name": "Score",
             "dataType": "double",
+            "isHidden": true,
             "sourceColumn": "Score",
             "sourceProviderType": "Numeric"
           },
           {
             "name": "National Score High",
             "dataType": "double",
+            "isHidden": true,
             "sourceColumn": "NationalScoreHigh",
             "sourceProviderType": "Numeric"
           },
           {
             "name": "National Score Low",
             "dataType": "double",
+            "isHidden": true,
             "sourceColumn": "NationalScoreLow",
             "sourceProviderType": "Numeric"
           },
           {
             "name": "National Score Average",
             "dataType": "double",
+            "isHidden": true,
             "sourceColumn": "NationalScoreAverage",
             "sourceProviderType": "Numeric"
           },
@@ -306,6 +320,7 @@
           {
             "name": "Measure Sort Order Number",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "MeasureSortOrderNumber",
             "sourceProviderType": "UnsignedTinyInt"
           },
@@ -356,6 +371,7 @@
             "name": "Facility Scores",
             "dataView": "full",
             "source": {
+              "type": "query",
               "query": " SELECT [FacilityMeasures_WI_DW].[FactMeasure].* FROM [FacilityMeasures_WI_DW].[FactMeasure] ",
               "dataSource": "bitsql"
             }
@@ -400,16 +416,36 @@
         ],
         "measures": [
           {
-            "name": "High Score",
+            "name": "WI High Score",
             "expression": "MAX('Facility Scores'[Score])"
           },
           {
-            "name": "Low Score",
+            "name": "WI Low Score",
             "expression": "MIN('Facility Scores'[Score])"
           },
           {
-            "name": "Average Score",
+            "name": "WI Average Score",
             "expression": "AVERAGE('Facility Scores'[Score])"
+          },
+          {
+            "name": "Measure Score",
+            "expression": "SUM('Facility Scores'[Score])"
+          },
+          {
+            "name": "Measure Rank Sort Number",
+            "expression": "MAX('Facility Scores'[Measure Sort Order Number])"
+          },
+          {
+            "name": "US High Score",
+            "expression": "MAX('Facility Scores'[National Score High])"
+          },
+          {
+            "name": "US Low Score",
+            "expression": "MIN('Facility Scores'[National Score Low])"
+          },
+          {
+            "name": "US Average Score",
+            "expression": "AVERAGE('Facility Scores'[National Score Average])"
           }
         ]
       }
