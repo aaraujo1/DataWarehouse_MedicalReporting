@@ -205,6 +205,13 @@
             "name": "Facility Phone Number",
             "dataType": "string",
             "sourceColumn": "FacilityPhoneNumber"
+          },
+          {
+            "type": "calculated",
+            "name": "Facility Full Address",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": "[Facility Address]&\" \"&[Facility City]&\", \"&[Facility State]&\" \"&[Facility Zip Code]"
           }
         ],
         "partitions": [
@@ -270,7 +277,6 @@
           {
             "name": "Score",
             "dataType": "double",
-            "isHidden": true,
             "sourceColumn": "Score"
           },
           {
@@ -332,6 +338,13 @@
             "dataType": "int64",
             "isHidden": true,
             "sourceColumn": "MeasureSortOrderNumber"
+          },
+          {
+            "type": "calculated",
+            "name": "US High Score",
+            "dataType": "double",
+            "isDataTypeInferred": true,
+            "expression": "[National Score High]"
           }
         ],
         "partitions": [
@@ -391,10 +404,6 @@
             "expression": "SUM('Facility Scores'[Score])"
           },
           {
-            "name": "Rank",
-            "expression": "RANKX('Facility Scores', [Measure Score], ,DESC,Dense)"
-          },
-          {
             "name": "Measure Sort Number",
             "expression": "MAX('Facility Scores'[Measure Sort Order Number])"
           }
@@ -423,6 +432,16 @@
         "fromColumn": "Facility Key",
         "toTable": "Facilities",
         "toColumn": "Facility Key"
+      }
+    ],
+    "roles": [
+      {
+        "name": "Report User",
+        "modelPermission": "read"
+      },
+      {
+        "name": "Process Database",
+        "modelPermission": "administrator"
       }
     ],
     "annotations": [
