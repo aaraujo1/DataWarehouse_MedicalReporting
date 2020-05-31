@@ -277,21 +277,25 @@
           {
             "name": "Score",
             "dataType": "double",
+            "isHidden": true,
             "sourceColumn": "Score"
           },
           {
             "name": "National Score High",
             "dataType": "double",
+            "isHidden": true,
             "sourceColumn": "NationalScoreHigh"
           },
           {
             "name": "National Score Low",
             "dataType": "double",
+            "isHidden": true,
             "sourceColumn": "NationalScoreLow"
           },
           {
             "name": "National Score Average",
             "dataType": "double",
+            "isHidden": true,
             "sourceColumn": "NationalScoreAverage"
           },
           {
@@ -338,13 +342,6 @@
             "dataType": "int64",
             "isHidden": true,
             "sourceColumn": "MeasureSortOrderNumber"
-          },
-          {
-            "type": "calculated",
-            "name": "US High Score",
-            "dataType": "double",
-            "isDataTypeInferred": true,
-            "expression": "[National Score High]"
           }
         ],
         "partitions": [
@@ -388,15 +385,15 @@
         ],
         "measures": [
           {
-            "name": "High Score",
+            "name": "WI High Score",
             "expression": "MAX('Facility Scores'[Score])"
           },
           {
-            "name": "Low Score",
+            "name": "WI Low Score",
             "expression": "MIN('Facility Scores'[Score])"
           },
           {
-            "name": "Average Score",
+            "name": "WI Average Score",
             "expression": "AVERAGE('Facility Scores'[Score])"
           },
           {
@@ -406,6 +403,18 @@
           {
             "name": "Measure Sort Number",
             "expression": "MAX('Facility Scores'[Measure Sort Order Number])"
+          },
+          {
+            "name": "US High Score",
+            "expression": "MAX('Facility Scores'[National Score High])"
+          },
+          {
+            "name": "US Low Score",
+            "expression": "MIN('Facility Scores'[National Score Low])"
+          },
+          {
+            "name": "US Average Score",
+            "expression": "Average('Facility Scores'[National Score Average])"
           }
         ]
       }
