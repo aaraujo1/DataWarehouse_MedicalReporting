@@ -8,7 +8,7 @@
         "name": "bitsql",
         "connectionString": "Provider=SQLNCLI11;Data Source=bitsql.wctc.edu;Initial Catalog=MedicareReportingDW;User ID=MedicareReportingUser;Persist Security Info=true",
         "impersonationMode": "impersonateAccount",
-        "account": "bitdb\\nkowalchuk",
+        "account": "bitdw\\bitstudent",
         "annotations": [
           {
             "name": "ConnectionEditUISource",
@@ -472,6 +472,28 @@
         "fromColumn": "FacilityKey",
         "toTable": "Facilities",
         "toColumn": "FacilityKey"
+      }
+    ],
+    "roles": [
+      {
+        "name": "Report User",
+        "modelPermission": "read",
+        "members": [
+          {
+            "memberName": "BITDW\\MedicareReporting",
+            "memberId": "S-1-5-21-2754051842-109426875-2868356223-1606"
+          }
+        ]
+      },
+      {
+        "name": "Process Database",
+        "modelPermission": "administrator",
+        "members": [
+          {
+            "memberName": "BITDW\\MedicareReporting",
+            "memberId": "S-1-5-21-2754051842-109426875-2868356223-1606"
+          }
+        ]
       }
     ],
     "annotations": [
