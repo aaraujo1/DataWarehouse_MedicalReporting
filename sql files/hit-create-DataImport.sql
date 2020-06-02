@@ -26,10 +26,10 @@ create table DataImport.Complications_and_Deaths
     MeasureName        varchar(100),
     ComparedToNational varchar(50),
     Denominator        varchar(20),
-    Score              varchar(20),
+    Score              varchar(20), -- some scores are "Not available"
     LowerEstimate      varchar(20),
     HigherEstimate     varchar(20),
-    Footnote           varchar(10),
+    Footnote           varchar(10), -- some footnotes have commas
     StartDate          varchar(10),
     EndDate            varchar(10)
 )
@@ -49,8 +49,8 @@ create table DataImport.Healthcare_Associated_Infections
     MeasureID          varchar(50),
     MeasureName        varchar(100),
     ComparedToNational varchar(50),
-    Score              varchar(20),
-    Footnote           varchar(10),
+    Score              varchar(20), -- some scores are "Not available"
+    Footnote           varchar(10), -- some footnotes have commas
     StartDate          varchar(10),
     EndDate            varchar(10)
 )

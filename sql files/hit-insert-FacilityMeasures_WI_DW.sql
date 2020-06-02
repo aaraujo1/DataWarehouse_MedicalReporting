@@ -121,17 +121,20 @@ from FacilityMeasures_WI_DW.DimDate;
 * ---------------------------
 * 05/24/2020 - Changed merge to be on FacilityID and FacilityName
   to make sure they are the same as new data
-*
+* 06/01/2020 - Merge only on Facility Name in case ID changes
 * ***********************************/
 create or alter procedure FacilityMeasures_WI_DW.DimFacility_upsert
 as
 begin
     merge into FacilityMeasures_WI_DW.DimFacility as tgt
     using FacilityMeasures_WI.Facilities as src
-    on tgt.FacilityID = src.FacilityID and tgt.FacilityName = src.FacilityName -- ensures ID and Name are the same
+    on -- tgt.FacilityID = src.FacilityID and
+        tgt.FacilityName = src.FacilityName -- ensures ID and Name are the same
+    -- only on name
     when matched then
         update
-        set tgt.FacilityAddress     = src.Address,
+        set tgt.FacilityID          = src.FacilityID,
+            tgt.FacilityAddress     = src.Address,
             tgt.FacilityCity        = src.City,
             tgt.FacilityState       = src.State,
             tgt.FacilityZipCode     = src.ZipCode,
@@ -289,6 +292,10 @@ from FacilityMeasures_WI_DW.FactMeasure fm
 *
 * This procedure populates the FacilityMeasures_WI_DW Data Warehouse.
 *
+* Change Log
+* ---------------------------
+* 06/01/2020 - included merge on FacilityMeasureID
+*
 * ***********************************/
 create or alter procedure FacilityMeasures_WI_DW.DW_ETL_Control
 as
@@ -296,6 +303,17 @@ begin
 
     begin try
         begin tran
+            -- merge FacilityMeasures_US
+            exec FacilityMeasures_US.Facilities_Upsert
+            exec FacilityMeasures_US.Measures_Upsert
+            exec FacilityMeasures_US.FacilityMeasures_Upsert
+
+            -- merge FacilityMeasures_WI
+            exec FacilityMeasures_WI.Facilities_Upsert
+            exec FacilityMeasures_WI.Measures_Upsert
+            exec FacilityMeasures_WI.FacilityMeasures_Upsert
+
+            -- merge Data Warehouse
             exec FacilityMeasures_WI_DW.DimFacility_upsert
             exec FacilityMeasures_WI_DW.FactMeasure_upsert
         commit;
