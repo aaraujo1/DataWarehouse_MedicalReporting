@@ -548,6 +548,10 @@ exec FacilityMeasures_WI.Facilities_Upsert
 *
 * This procedure populates the Measures table
 *
+* Note:
+* Currently not working. Could be built from
+  FacilityMeasures_US.Measures with filter instead
+*
 * ***********************************/
 create or alter procedure FacilityMeasures_WI.Measures_Upsert
 as
